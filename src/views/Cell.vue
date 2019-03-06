@@ -1,27 +1,47 @@
 <template>
-  <div class="cell"></div>
+  <div class="cell">
+    <FormItem 
+      v-for="(item, index) in cellConfig.children" 
+      :key="index" 
+      :formItemConfig="item"
+      @click.native="setActiveFormItem(item)"
+    ></FormItem>
+  </div>
 </template>
 
 <script>
-  import Row from '@/views/Row'
+  import {mapState} from 'vuex'
+  import FormItem from '@/views/FormItem'
+  
   export default {
-    data() {
-      return {
-
+    props: {
+      cellConfig: {
+        type: Object,
+        default: function() {
+          return {id: '', children: []}
+        }
       }
     },
-    computed() {
-
+    data() {
+      return {
+      }
     },
-    methods: {
-
+    computed: mapState({
+      formItemConfig: state => state.formItemConfig,
+    }),
+    methods: { 
+      setActiveFormItem(formItem) {
+        this.$store.commit('ACTIVE_FORMITEM_ID', formItem.formItemId)
+      }
     },
     components: {
-      Row
+      FormItem
     }
   }
 </script>
 
 <style scoped>
-
+  .cell{
+    
+  }
 </style>
